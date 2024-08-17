@@ -1,0 +1,29 @@
+import bcrypt
+
+# Function to hash a password and return the hashed version
+def hash_password(password):
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+    return hashed_password
+
+# Function to store a hashed password in a file
+def store_password_in_file(username, hashed_password, filename):
+    with open(filename, 'a') as f:
+        f.write(f"{username}:{hashed_password.decode('utf-8')}\n")
+    print(f"Password hashed and stored in {filename}")
+# Example usage
+def main():
+    filename = 'passwords.txt'
+
+    # Simulating a user setting their password
+    username = input("Enter username: ")
+    password = input("Enter password: ")
+
+    # Hash the password
+    hashed_password = hash_password(password)
+
+    # Store hashed password in a file
+    store_password_in_file(username, hashed_password, filename)
+
+if __name__ == "__main__":
+    main()
